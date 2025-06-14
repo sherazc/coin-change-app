@@ -34,7 +34,7 @@ public class CoinBankService {
     double availableFunds = coinCalculator.total(allCoins);
 
     if (availableFunds < bill) {
-      throw new InsufficientFundsException();
+      throw new InsufficientFundsException(bill, availableFunds);
     }
 
     Map<CoinType, Integer> change = new HashMap<>();
@@ -43,15 +43,15 @@ public class CoinBankService {
     int balanceCents = addCoins(CoinType.QUARTER, billCents, change);
 
     if (balanceCents > 0) {
-      balanceCents = addCoins(CoinType.DIME, billCents, change);
+      balanceCents = addCoins(CoinType.DIME, balanceCents, change);
     }
 
     if (balanceCents > 0) {
-      balanceCents = addCoins(CoinType.NICKEL, billCents, change);
+      balanceCents = addCoins(CoinType.NICKEL, balanceCents, change);
     }
 
     if (balanceCents > 0) {
-      addCoins(CoinType.PENNY, billCents, change);
+      addCoins(CoinType.PENNY, balanceCents, change);
     }
 
     return change;
@@ -59,7 +59,7 @@ public class CoinBankService {
 
   private int addCoins(CoinType coinType, int balanceCents, Map<CoinType, Integer> change) {
     int availableCount = coinRepository.getByType(coinType);
-    if (availableCount < 0) {
+    if (availableCount < 1) {
       return balanceCents;
     }
     int neededCount = coinCalculator.convertCentsToCoins(coinType, balanceCents);
