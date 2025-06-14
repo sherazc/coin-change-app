@@ -6,6 +6,7 @@ import com.sample.coinchange.repository.CoinRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Service
@@ -24,12 +25,26 @@ public class CoinBankService {
       throw new InsufficientFundsException("Insufficient Funds");
     }
 
+    Map<CoinType, Integer> change =  new HashMap<>();
 
-    return Map.of(
-        CoinType.QUARTER, 2,
-        CoinType.DIME, 5,
-        CoinType.NICKEL, 20
-    );
+    double remaining = addQuarter(bill, change);
+
+    return change;
+  }
+
+  private double addQuarter(Integer bill, Map<CoinType, Integer> change) {
+    int availableCount = coinRepository.getByType(CoinType.QUARTER);
+    int neededCount = coinCalculator.breakBillIntoCoins(CoinType.QUARTER, bill);
+
+    int coinCount;
+    if (availableCount < neededCount) {
+
+    }
+
+
+
+
+    return 0;
   }
 
 

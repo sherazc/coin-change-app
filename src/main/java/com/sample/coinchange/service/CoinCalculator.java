@@ -7,24 +7,15 @@ import java.util.Map;
 
 @Component
 public class CoinCalculator {
+
   public double total(Map<CoinType, Integer> coins) {
-    double total = 0;
-    if (coins.get(CoinType.PENNY) != null) {
-      total += coins.get(CoinType.PENNY) * .01;
-    }
+    return coins.keySet().stream()
+        .filter(ct -> coins.get(ct) != null)
+        .map(ct -> coins.get(ct) * ct.getAmount().doubleValue())
+        .reduce(0d, Double::sum);
+  }
 
-    if (coins.get(CoinType.NICKEL) != null) {
-      total += coins.get(CoinType.NICKEL) * .05;
-    }
-
-    if (coins.get(CoinType.DIME) != null) {
-      total += coins.get(CoinType.DIME) * .1;
-    }
-
-    if (coins.get(CoinType.QUARTER) != null) {
-      total += coins.get(CoinType.QUARTER) * .25;
-    }
-
-    return total;
+  public int breakBillIntoCoins(CoinType type, Integer bill) {
+    return bill * 100 / type.getCents();
   }
 }
