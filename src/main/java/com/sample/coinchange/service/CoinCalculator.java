@@ -15,7 +15,7 @@ public class CoinCalculator {
         .reduce(0d, Double::sum);
   }
 
-  public int breakBillIntoCoins(CoinType type, Integer bill) {
-    return bill * 100 / type.getCents();
+  public int convertCentsToCoins(CoinType type, int cents) {
+    return cents / type.getCents();
   }
 }
