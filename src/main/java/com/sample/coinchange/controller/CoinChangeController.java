@@ -23,4 +23,11 @@ public class CoinChangeController {
     log.info("Calculating change for {}", bill);
     return coinBankService.makeChange(bill);
   }
+
+  @GetMapping(value = "/api/coins/balance",
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  public Map<CoinType, Integer> coinBalance() {
+    log.info("Checking coins balance");
+    return coinBankService.getCoinBalance();
+  }
 }
