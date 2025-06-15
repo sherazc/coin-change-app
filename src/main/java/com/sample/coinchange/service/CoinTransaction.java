@@ -24,19 +24,19 @@ public class CoinTransaction {
 
     // Find coin change
     int neededCoins = coinCalculator.centsToCoins(coinType, balanceCents);
-    int coinCount = Math.min(availableCoins, neededCoins);
+    int debitCoinCount = Math.min(availableCoins, neededCoins);
 
     // Remove coins repo
-    debitCoins(coinType, coinCount);
+    debitCoins(coinType, availableCoins, debitCoinCount);
 
     // Add coins in response
-    coinBag.put(coinType, coinCount);
+    coinBag.put(coinType, debitCoinCount);
 
     // Calculate balance forward
-    return balanceCents - coinCalculator.coinsToCents(coinType, coinCount);
+    return balanceCents - coinCalculator.coinsToCents(coinType, debitCoinCount);
   }
 
-  private void debitCoins(CoinType coinType, int coinCount) {
-    coinRepository.update(coinType, coinRepository.getByType(coinType) - coinCount);
+  private void debitCoins(CoinType coinType, int availableCoins, int coinCount) {
+    coinRepository.update(coinType, availableCoins - coinCount);
   }
 }
