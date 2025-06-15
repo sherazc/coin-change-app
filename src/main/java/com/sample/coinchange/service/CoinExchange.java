@@ -1,7 +1,6 @@
 package com.sample.coinchange.service;
 
 import com.sample.coinchange.dto.CoinType;
-import com.sample.coinchange.repository.CoinRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +13,6 @@ public class CoinExchange {
 
   private final BillValidator billValidator;
   private final CoinTransaction coinTransaction;
-
 
   public Map<CoinType, Integer> makeChange(Integer bill) {
     billValidator.validateBill(bill);
@@ -38,9 +36,4 @@ public class CoinExchange {
 
     return change;
   }
-
-
-
-
-
 }

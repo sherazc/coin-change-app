@@ -13,28 +13,29 @@ import java.util.Map;
 public class CoinTransaction {
 
   private final CoinRepository coinRepository;
+  private final CoinCalculator coinCalculator;
 
   public int withdrawCoinBalance(CoinType coinType, int balanceCents, Map<CoinType, Integer> change) {
     int availableCount = coinRepository.getByType(coinType);
     if (availableCount < 1) {
       return balanceCents;
     }
-    int neededCount = convertCentsToCoins(coinType, balanceCents);
+    int neededCount = coinCalculator.centsToCoins(coinType, balanceCents);
 
     int coinCount = Math.min(availableCount, neededCount);
 
+    // Remove coins count
     debitCoins(coinType, coinCount);
 
+    // Add coin count
     change.put(coinType, coinCount);
 
-    return balanceCents - (coinCount * coinType.getCents());
+    // Calculate balance
+    return balanceCents - coinCalculator.coinsToCents(coinType, coinCount);
   }
+
 
   private void debitCoins(CoinType coinType, int coinCount) {
     coinRepository.update(coinType, coinRepository.getByType(coinType) - coinCount);
-  }
-
-  private int convertCentsToCoins(CoinType type, int cents) {
-    return cents / type.getCents();
   }
 }

@@ -16,6 +16,7 @@ public class BillValidator {
   private static final List<Integer> ALLOWED_BILLS = List.of(1, 2, 5, 10, 20, 50, 100);
 
   private final CoinRepository coinRepository;
+  private final CoinCalculator coinCalculator;
 
   public void validateBill(Integer bill) {
     if (!ALLOWED_BILLS.contains(bill)) {
@@ -24,17 +25,10 @@ public class BillValidator {
 
     Map<CoinType, Integer> allCoins = coinRepository.getAll();
 
-    double availableFunds = total(allCoins);
+    double availableFunds = coinCalculator.total(allCoins);
 
     if (availableFunds < bill) {
       throw new InsufficientFundsException(bill, availableFunds);
     }
-  }
-
-  private double total(Map<CoinType, Integer> coins) {
-    return coins.keySet().stream()
-        .filter(ct -> coins.get(ct) != null)
-        .map(ct -> coins.get(ct) * ct.getAmount().doubleValue())
-        .reduce(0d, Double::sum);
   }
 }

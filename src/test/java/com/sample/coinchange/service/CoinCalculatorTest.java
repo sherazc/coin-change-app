@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CoinCalculatorTest {
 
   private final CoinCalculator underTest = new CoinCalculator();
-/*
+
   @Test
   void total() {
     assertEquals(1, underTest.total(Map.of(CoinType.QUARTER, 4)));
@@ -28,33 +28,31 @@ class CoinCalculatorTest {
   }
 
   @Test
-  void convertCentsToCoins() {
-    assertEquals(4, underTest.convertCentsToCoins(CoinType.QUARTER, 100));
-    assertEquals(0, underTest.convertCentsToCoins(CoinType.QUARTER, 0));
-    assertEquals(0, underTest.convertCentsToCoins(CoinType.QUARTER, 24));
-    assertEquals(1, underTest.convertCentsToCoins(CoinType.QUARTER, 25));
-    assertEquals(1, underTest.convertCentsToCoins(CoinType.QUARTER, 26));
-    assertEquals(8, underTest.convertCentsToCoins(CoinType.QUARTER, 200));
+  void centsToCoins() {
+    assertEquals(4, underTest.centsToCoins(CoinType.QUARTER, 100));
+    assertEquals(0, underTest.centsToCoins(CoinType.QUARTER, 0));
+    assertEquals(0, underTest.centsToCoins(CoinType.QUARTER, 24));
+    assertEquals(1, underTest.centsToCoins(CoinType.QUARTER, 25));
+    assertEquals(1, underTest.centsToCoins(CoinType.QUARTER, 26));
+    assertEquals(8, underTest.centsToCoins(CoinType.QUARTER, 200));
 
-    assertEquals(10, underTest.convertCentsToCoins(CoinType.DIME, 100));
-    assertEquals(0, underTest.convertCentsToCoins(CoinType.DIME, 0));
-    assertEquals(0, underTest.convertCentsToCoins(CoinType.DIME, 9));
-    assertEquals(1, underTest.convertCentsToCoins(CoinType.DIME, 10));
-    assertEquals(1, underTest.convertCentsToCoins(CoinType.DIME, 11));
-    assertEquals(20, underTest.convertCentsToCoins(CoinType.DIME, 200));
+    assertEquals(10, underTest.centsToCoins(CoinType.DIME, 100));
+    assertEquals(0, underTest.centsToCoins(CoinType.DIME, 0));
+    assertEquals(0, underTest.centsToCoins(CoinType.DIME, 9));
+    assertEquals(1, underTest.centsToCoins(CoinType.DIME, 10));
+    assertEquals(1, underTest.centsToCoins(CoinType.DIME, 11));
+    assertEquals(20, underTest.centsToCoins(CoinType.DIME, 200));
 
-    assertEquals(20, underTest.convertCentsToCoins(CoinType.NICKEL, 100));
-    assertEquals(0, underTest.convertCentsToCoins(CoinType.NICKEL, 0));
-    assertEquals(0, underTest.convertCentsToCoins(CoinType.NICKEL, 4));
-    assertEquals(1, underTest.convertCentsToCoins(CoinType.NICKEL, 5));
-    assertEquals(1, underTest.convertCentsToCoins(CoinType.NICKEL, 6));
-    assertEquals(40, underTest.convertCentsToCoins(CoinType.NICKEL, 200));
+    assertEquals(20, underTest.centsToCoins(CoinType.NICKEL, 100));
+    assertEquals(0, underTest.centsToCoins(CoinType.NICKEL, 0));
+    assertEquals(0, underTest.centsToCoins(CoinType.NICKEL, 4));
+    assertEquals(1, underTest.centsToCoins(CoinType.NICKEL, 5));
+    assertEquals(1, underTest.centsToCoins(CoinType.NICKEL, 6));
+    assertEquals(40, underTest.centsToCoins(CoinType.NICKEL, 200));
 
-    assertEquals(100, underTest.convertCentsToCoins(CoinType.PENNY, 100));
-    assertEquals(0, underTest.convertCentsToCoins(CoinType.PENNY, 0));
-    assertEquals(1, underTest.convertCentsToCoins(CoinType.PENNY, 1));
-    assertEquals(200, underTest.convertCentsToCoins(CoinType.PENNY, 200));
+    assertEquals(100, underTest.centsToCoins(CoinType.PENNY, 100));
+    assertEquals(0, underTest.centsToCoins(CoinType.PENNY, 0));
+    assertEquals(1, underTest.centsToCoins(CoinType.PENNY, 1));
+    assertEquals(200, underTest.centsToCoins(CoinType.PENNY, 200));
   }
-
- */
 }
