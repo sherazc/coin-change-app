@@ -17,23 +17,23 @@ public class CoinExchange {
   public Map<CoinType, Integer> makeChange(Integer bill) {
     billValidator.validateBill(bill);
 
-    Map<CoinType, Integer> change = new HashMap<>();
+    Map<CoinType, Integer> coinBag = new HashMap<>();
     int billCents = bill * 100;
 
-    int balanceCents = coinTransaction.withdrawCoinBalance(CoinType.QUARTER, billCents, change);
+    int balanceCents = coinTransaction.withdrawCoinBalance(CoinType.QUARTER, billCents, coinBag);
 
     if (balanceCents > 0) {
-      balanceCents = coinTransaction.withdrawCoinBalance(CoinType.DIME, balanceCents, change);
+      balanceCents = coinTransaction.withdrawCoinBalance(CoinType.DIME, balanceCents, coinBag);
     }
 
     if (balanceCents > 0) {
-      balanceCents = coinTransaction.withdrawCoinBalance(CoinType.NICKEL, balanceCents, change);
+      balanceCents = coinTransaction.withdrawCoinBalance(CoinType.NICKEL, balanceCents, coinBag);
     }
 
     if (balanceCents > 0) {
-      coinTransaction.withdrawCoinBalance(CoinType.PENNY, balanceCents, change);
+      coinTransaction.withdrawCoinBalance(CoinType.PENNY, balanceCents, coinBag);
     }
 
-    return change;
+    return coinBag;
   }
 }

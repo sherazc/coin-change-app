@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-
 @Component
 @RequiredArgsConstructor
 public class CoinTransaction {
@@ -15,25 +14,27 @@ public class CoinTransaction {
   private final CoinRepository coinRepository;
   private final CoinCalculator coinCalculator;
 
-  public int withdrawCoinBalance(CoinType coinType, int balanceCents, Map<CoinType, Integer> change) {
-    int availableCount = coinRepository.getByType(coinType);
-    if (availableCount < 1) {
+  public int withdrawCoinBalance(CoinType coinType, int balanceCents, Map<CoinType, Integer> coinBag) {
+    int availableCoins = coinRepository.getByType(coinType);
+
+    // Forward balance if none available
+    if (availableCoins < 1) {
       return balanceCents;
     }
-    int neededCount = coinCalculator.centsToCoins(coinType, balanceCents);
 
-    int coinCount = Math.min(availableCount, neededCount);
+    // Find coin change
+    int neededCoins = coinCalculator.centsToCoins(coinType, balanceCents);
+    int coinCount = Math.min(availableCoins, neededCoins);
 
-    // Remove coins count
+    // Remove coins repo
     debitCoins(coinType, coinCount);
 
-    // Add coin count
-    change.put(coinType, coinCount);
+    // Add coins in response
+    coinBag.put(coinType, coinCount);
 
-    // Calculate balance
+    // Calculate balance forward
     return balanceCents - coinCalculator.coinsToCents(coinType, coinCount);
   }
-
 
   private void debitCoins(CoinType coinType, int coinCount) {
     coinRepository.update(coinType, coinRepository.getByType(coinType) - coinCount);

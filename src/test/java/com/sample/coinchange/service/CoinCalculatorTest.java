@@ -55,4 +55,23 @@ class CoinCalculatorTest {
     assertEquals(1, underTest.centsToCoins(CoinType.PENNY, 1));
     assertEquals(200, underTest.centsToCoins(CoinType.PENNY, 200));
   }
+
+  @Test
+  void coinsToCents() {
+    assertEquals(0, underTest.coinsToCents(CoinType.QUARTER, 0));
+    assertEquals(25, underTest.coinsToCents(CoinType.QUARTER, 1));
+    assertEquals(50, underTest.coinsToCents(CoinType.QUARTER, 2));
+
+    assertEquals(0, underTest.coinsToCents(CoinType.DIME, 0));
+    assertEquals(10, underTest.coinsToCents(CoinType.DIME, 1));
+    assertEquals(20, underTest.coinsToCents(CoinType.DIME, 2));
+
+    assertEquals(0, underTest.coinsToCents(CoinType.NICKEL, 0));
+    assertEquals(5, underTest.coinsToCents(CoinType.NICKEL, 1));
+    assertEquals(10, underTest.coinsToCents(CoinType.NICKEL, 2));
+
+    assertEquals(0, underTest.coinsToCents(CoinType.PENNY, 0));
+    assertEquals(1, underTest.coinsToCents(CoinType.PENNY, 1));
+    assertEquals(2, underTest.coinsToCents(CoinType.PENNY, 2));
+  }
 }
