@@ -1,6 +1,7 @@
 package com.sample.coinchange.controller;
 
 import com.sample.coinchange.dto.CoinType;
+import com.sample.coinchange.service.CoinBank;
 import com.sample.coinchange.service.CoinExchange;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,7 @@ import java.util.Map;
 @AllArgsConstructor
 public class CoinChangeController {
   private final CoinExchange coinExchange;
+  private final CoinBank coinBank;
 
   @GetMapping(value = "/api/change/{bill}",
       produces = MediaType.APPLICATION_JSON_VALUE)
@@ -28,6 +30,6 @@ public class CoinChangeController {
       produces = MediaType.APPLICATION_JSON_VALUE)
   public Map<CoinType, Integer> coinBalance() {
     log.info("Checking coins balance");
-    return coinExchange.getCoinBalance();
+    return coinBank.checkBalance();
   }
 }
