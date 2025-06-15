@@ -13,29 +13,18 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class CoinBankService {
+public class CoinExchange {
 
-  private static final List<Integer> ALLOWED_BILLS = List.of(1, 2, 5, 10, 20, 50, 100);
+  private final BillValidator billValidator;
 
   private final CoinRepository coinRepository;
-  private final CoinCalculator coinCalculator;
 
   public Map<CoinType, Integer> getCoinBalance() {
     return coinRepository.getAll();
   }
 
   public Map<CoinType, Integer> makeChange(Integer bill) {
-    if (!ALLOWED_BILLS.contains(bill)) {
-      throw new InvalidBillException();
-    }
-
-    Map<CoinType, Integer> allCoins = coinRepository.getAll();
-
-    double availableFunds = coinCalculator.total(allCoins);
-
-    if (availableFunds < bill) {
-      throw new InsufficientFundsException(bill, availableFunds);
-    }
+    billValidator.validateBill(bill);
 
     Map<CoinType, Integer> change = new HashMap<>();
     int billCents = bill * 100;
@@ -57,12 +46,15 @@ public class CoinBankService {
     return change;
   }
 
+
+
+
   private int addCoins(CoinType coinType, int balanceCents, Map<CoinType, Integer> change) {
     int availableCount = coinRepository.getByType(coinType);
     if (availableCount < 1) {
       return balanceCents;
     }
-    int neededCount = coinCalculator.convertCentsToCoins(coinType, balanceCents);
+    int neededCount = convertCentsToCoins(coinType, balanceCents);
 
     int coinCount = Math.min(availableCount, neededCount);
 
@@ -75,5 +67,11 @@ public class CoinBankService {
 
   private void debitCoins(CoinType coinType, int coinCount) {
     coinRepository.update(coinType, coinRepository.getByType(coinType) - coinCount);
+  }
+
+
+
+  public int convertCentsToCoins(CoinType type, int cents) {
+    return cents / type.getCents();
   }
 }

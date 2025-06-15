@@ -1,7 +1,7 @@
 package com.sample.coinchange.controller;
 
 import com.sample.coinchange.dto.CoinType;
-import com.sample.coinchange.service.CoinBankService;
+import com.sample.coinchange.service.CoinExchange;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -15,19 +15,19 @@ import java.util.Map;
 @Slf4j
 @AllArgsConstructor
 public class CoinChangeController {
-  private final CoinBankService coinBankService;
+  private final CoinExchange coinExchange;
 
   @GetMapping(value = "/api/change/{bill}",
       produces = MediaType.APPLICATION_JSON_VALUE)
   public Map<CoinType, Integer> calculateChange(@PathVariable Integer bill) {
     log.info("Calculating change for {}", bill);
-    return coinBankService.makeChange(bill);
+    return coinExchange.makeChange(bill);
   }
 
   @GetMapping(value = "/api/coins/balance",
       produces = MediaType.APPLICATION_JSON_VALUE)
   public Map<CoinType, Integer> coinBalance() {
     log.info("Checking coins balance");
-    return coinBankService.getCoinBalance();
+    return coinExchange.getCoinBalance();
   }
 }

@@ -8,14 +8,5 @@ import java.util.Map;
 @Component
 public class CoinCalculator {
 
-  public double total(Map<CoinType, Integer> coins) {
-    return coins.keySet().stream()
-        .filter(ct -> coins.get(ct) != null)
-        .map(ct -> coins.get(ct) * ct.getAmount().doubleValue())
-        .reduce(0d, Double::sum);
-  }
 
-  public int convertCentsToCoins(CoinType type, int cents) {
-    return cents / type.getCents();
-  }
 }
